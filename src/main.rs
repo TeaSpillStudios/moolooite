@@ -57,7 +57,7 @@ impl EventHandler for Handler {
 
 #[tokio::main]
 async fn main() {
-    dotenv.ok();
+    dotenv().ok();
 
     let token = env::var("TOKEN").expect("TOKEN must be defined in the environment.");
 
