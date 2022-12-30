@@ -1,5 +1,6 @@
 mod commands;
 
+use dotenv::dotenv;
 use std::env;
 
 use serenity::async_trait;
@@ -56,6 +57,8 @@ impl EventHandler for Handler {
 
 #[tokio::main]
 async fn main() {
+    dotenv.ok();
+
     let token = env::var("TOKEN").expect("TOKEN must be defined in the environment.");
 
     let mut client = Client::builder(token, GatewayIntents::empty())
