@@ -18,6 +18,7 @@ impl EventHandler for Handler {
             println!("Recieved command interaction: {:#?}", command);
 
             let content = match command.data.name.as_str() {
+                "ping" => commands::ping::run(&command.data.options),
                 _ => String::from("Not yet implemented"),
             };
 
@@ -44,7 +45,10 @@ impl EventHandler for Handler {
                 .expect("GUILD_ID must be an integer."),
         );
 
-        let commands = GuildId::set_application_commands(&guild_id, &ctx.http, |commands| { commands }).await;
+        let commands = GuildId::set_application_commands(&guild_id, &ctx.http, |commands| {
+            commands.create_application_command(|command| commands::ping::register(command))
+        })
+        .await;
 
         println!("Following guild slash commands registered: {:#?}", commands);
     }
